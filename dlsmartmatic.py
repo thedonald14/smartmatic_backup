@@ -1,9 +1,11 @@
 import pandas as pd
 import urllib.request
 from urllib.parse import urlparse
+import os
 
 def dlsmartmaticsite():
-    """This program downloads all HTML files from a Linkchecker Site Crawl.
+        """
+        This program downloads all HTML files from a Linkchecker Site Crawl.
         
         To crawl the site linkchecker was used. And can be installed here :
         pip3 install git+https://github.com/linkchecker/linkchecker.git
@@ -11,12 +13,14 @@ def dlsmartmaticsite():
         To run the Crawl use :
         linkchecker -v -o csv https://www.smartmatic.com/us/ > smartmatic.csv
         this  will export the file that is needed below.
-        
         """
     
     df = pd.read_csv("smartmatic.csv",skiprows=3,error_bad_lines=False,delimiter=";")
     listofurls = [url for url in df.url if not str(url).endswith(("jpg","png",".pdf",".js"))]
-
+    
+    if not os.path.exists('smartmaticsite'):
+        os.makedirs('smartmaticsite')
+        
     for url in listofurls: 
         try:
             urlname = urlparse(url).path
