@@ -13,6 +13,11 @@ def dlsmartmaticsite():
         To run the Crawl use :
         linkchecker -v -o csv https://www.smartmatic.com/us/ > smartmatic.csv
         this  will export the file that is needed below.
+        
+        To view the text for each file, without HTML use:
+        pip install html2text
+        html2text(filename.text)
+        
         """
     
     df = pd.read_csv("smartmatic.csv",skiprows=3,error_bad_lines=False,delimiter=";")
