@@ -21,7 +21,8 @@ def dlsmartmaticsite():
         """
     # Read all urls into a pandas DataFrame.
     df = pd.read_csv("smartmatic.csv",skiprows=3,error_bad_lines=False,delimiter=";")
-    # Remove not HTML links from Dataframe and make list of URL only.
+        
+    # Remove non HTML links from Dataframe and make list of URL only.
     #TODO Find and remove additional non HTML Pages like "JPEG"
     listofurls = [url for url in df.url if not str(url).endswith(("jpg","png",".pdf",".js"))]
     
