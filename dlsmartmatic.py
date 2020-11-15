@@ -5,7 +5,7 @@ import os
 
 def dlsmartmaticsite():
         """
-        This program downloads all HTML files from a Linkchecker Site Crawl.
+        This program downloads all HTML files from smartmatic.com from a Linkchecker Site Crawl.
         
         To crawl the site linkchecker was used. And can be installed here :
         pip3 install git+https://github.com/linkchecker/linkchecker.git
@@ -15,12 +15,14 @@ def dlsmartmaticsite():
         this  will export the file that is needed below.
         
         To view the text for each file, without HTML use:
-        pip install html2text
+        pip3 install html2text
         html2text(filename.text)
         
         """
-    
+    # Read all urls into a pandas DataFrame.
     df = pd.read_csv("smartmatic.csv",skiprows=3,error_bad_lines=False,delimiter=";")
+    # Remove not HTML links from Dataframe and make list of URL only.
+    #TODO Find and remove additional non HTML Pages like "JPEG"
     listofurls = [url for url in df.url if not str(url).endswith(("jpg","png",".pdf",".js"))]
     
     if not os.path.exists('smartmaticsite'):
@@ -28,6 +30,7 @@ def dlsmartmaticsite():
         
     for url in listofurls: 
         try:
+            # Get name of link for file save.
             urlname = urlparse(url).path
             
             req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
